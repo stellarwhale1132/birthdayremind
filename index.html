@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>角色生日提醒器</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>角色生日提醒器</h1>
+    </header>
+
+    <main>
+        <section class="controls">
+            <button id="add-char-btn">＋ 新增角色</button>
+            <button id="set-user-bday-btn">🎂 設定我的生日</button>
+            <button id="import-excel-btn">📤 匯入 Excel</button>
+            <input type="file" id="import-excel-input" accept=".xlsx, .xls" style="display: none;">
+            <button id="export-excel-btn">📥 匯出 Excel</button>
+        </section>
+        
+        <section class="view-switcher">
+            <span>檢視模式：</span>
+            <button id="view-card-btn" class="active">卡片模式</button>
+            <button id="view-list-btn">列表模式</button>
+        </section>
+
+        <section id="character-list-container">
+            <div class="list-header">
+                <h2>角色列表</h2>
+                <div class="filter-container">
+                    <label for="category-filter">篩選分類:</label>
+                    <select id="category-filter">
+                        <option value="all">-- 顯示全部 --</option>
+                        </select>
+                </div>
+            </div>
+            <div id="character-list">
+                </div>
+        </section>
+    </main>
+
+    <footer>
+        </footer>
+
+    <div id="char-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2 id="modal-title">新增角色</h2>
+            <form id="char-form">
+                <input type="hidden" id="char-id">
+                <label for="char-name">角色姓名:</label>
+                <input type="text" id="char-name" required>
+
+                <label for="char-birthday">生日: <small>(年份會被忽略)</small></label>
+                <input type="date" id="char-birthday" required>
+
+                <label for="char-source">登場作品/分類: <small>(非必填)</small></label>
+                <input type="text" id="char-source">
+                
+                <label for="user-bday-message">對我生日時說的話:</label>
+                <input type="text" id="user-bday-message" placeholder="例如：生日快樂，我的摯友！" required>
+
+                <label for="char-image">角色圖像:</label>
+                <input type="file" id="char-image" accept="image/*">
+                <img id="image-preview" src="#" alt="圖像預覽" style="display:none; max-width: 100px; margin-top: 10px;">
+
+                <button type="submit">儲存</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="user-bday-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>設定我的生日</h2>
+            <form id="user-bday-form">
+                <p>設定後，當您的生日到來時，角色們會對您說出祝福！</p>
+                <label for="user-birthday">我的生日日期: <small>(年份會被忽略)</small></label>
+                <input type="date" id="user-birthday" required>
+                <p>目前設定：<strong id="current-user-bday">尚未設定</strong></p>
+                <button type="submit">儲存設定</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
